@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const db = require("../routes/db-config");
 const bcrypt = require("bcryptjs");
 
-const login = async (req, res) => {
+const login = async(req, res) => {
     const { email, password } = req.body;
     if (!email || !password) return res.json({ status: "error", error: "Please enter your email and password" });
     else {
