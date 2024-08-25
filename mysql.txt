@@ -1,3 +1,5 @@
+MySQL-phpmyadmin(XAMPP)
+
 CREATE DATABASE sql_login;
 
 CREATE TABLE users (
