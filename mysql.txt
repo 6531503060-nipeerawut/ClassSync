@@ -1,0 +1,7 @@
+CREATE DATABASE sql_login;
+
+CREATE TABLE users (
+    id INT(11) AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    email VARCHAR(100) NOT NULL,
+    password TEXT NOT NULL
+)
