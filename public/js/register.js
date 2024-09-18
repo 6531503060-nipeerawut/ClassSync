@@ -1,8 +1,13 @@
 form.addEventListener("submit", () => {
     const register = {
+        full_name: full_name.value,
+        studentID: studentID.value,
+        school: school.value,
+        telephone_number: telephone_number.value,
         email: email.value,
         password: password.value
     }
+
     fetch("/api/register", {
         method: "POST",
         body: JSON.stringify(register),

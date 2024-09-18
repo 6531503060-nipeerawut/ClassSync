@@ -11,10 +11,10 @@ router.get("/", loggedIn, (req, res) => {
     }
 });
 router.get("/register", (req, res) => {
-    res.sendFile("register.html", {root: "./public"});
+    res.render("register", {error: false, message: ""});
 });
 router.get("/login", (req, res) => {
-    res.sendFile("login.html", {root: "./public/"});
+    res.render("login", {error: false, message: ""});
 });
 
 router.post("/logout", logout);

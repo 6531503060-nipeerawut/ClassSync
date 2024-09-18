@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 
 const login = async(req, res) => {
     const { email, password } = req.body;
-    if (!email || !password) return res.json({ status: "error", error: "Please enter your email and password" });
+    if (!email || !password) return res.render('login', { error: true, message: "Please provide Email and Password"});
     else {
         db.query('SELECT * FROM users WHERE email = ?', [email], async (err, result) => {
             if (err) throw err;
