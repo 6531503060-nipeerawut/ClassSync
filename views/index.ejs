@@ -19,7 +19,7 @@
                 <a class="nav-link active" aria-current="page" href="#">Home</a>
             </li>
                 <%if (status == "loggedIn"){%>
-                    <li class="nav-item"><a class="nav-link" href="/profile">Profile</a></li>
+                    <li class="nav-item"><a class="nav-link" href="">My Profile</a></li>
                     <li class="nav-item"><a class="nav-link" href="/api/logout">Logout</a></li>
                     <%}else{%>
                         <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
@@ -33,12 +33,15 @@
         <div class="card" style="width: 100%;">
             <div class="card-body">
             <%if (status == "loggedIn"){%>
-            <h5 class="card-title">Welcome <% user.email%></h5>
+            <h5 class="card-title">Welcome to ClassSync<% user.email%></h5>
             <%}else{%>
-                <h5 class="card-title">Welcome to the site</h5>
+                <h5 class="card-title">Welcome</h5>
                 <%}%>
-            <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <p class="text"><a href="">Check-in,out</a></p>
+            <p class="text"><a href="">Attendance</a></p>
+            <p class="text"><a href="">Calender</a></p>
+            <p class="text"><a href="">My Profile</a></p>
+            <p class="text"><a href="">Setting</a></p>
             </div>
         </div>
     </div>
