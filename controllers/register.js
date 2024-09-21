@@ -2,31 +2,37 @@ const db = require("../routes/db-config");
 const bcrypt = require("bcryptjs");
 
 const register = async (req, res) => {
-    const { email, password, full_name, studentID, school, telephone_number } = req.body;
-    
-    // Check if email and password are provided
-    if (!email || !password) {
-        return res.render('register', { error: true, message: "Please enter your Email and Password" });
-    }
+    const { id, fullName, email, password, school, phone, role } = req.body
+    const hashPassword = await bcrypt.hash(password, 10)
+    const userSQL = "INSERT INTO users (email, password, role) VALUES(?,?,?)"
 
-    // Check if email is already registered
-    db.query('SELECT email FROM users WHERE email = ?', [email], async (err, result) => {
-        if (err) throw err;
-        
-        if (result.length) {
-            return res.render('register', { error: true, message: "This email have already exist" });
-        } else {
-            // Hash the password
-            const hashedPassword = await bcrypt.hash(password, 8);
-            
-            // Insert the new user into the database
-            db.query('INSERT INTO users SET ?', { email: email, password: hashedPassword, FullName: full_name, StudentID: studentID, School: school, TelephoneNumber: telephone_number }, (error, results) => {
-                if (error) throw error;
-                
-                return res.render('index', { status: "loggedIn", user: "User" });
-            });
+    db.query(userSQL,[email, hashPassword, role],(err,result) => {
+        if(err) {
+            return res.status(401).render("register", {errState:true, message:"Register Failed"})
         }
-    });
-};
 
+        if(result.length > 0) {
+            return res.render('register', {errState:true, message:"Email already exists"})
+        }
+        const userID = result.insertId
+
+        if(role == 1) {
+            const studentSQL = "INSERT INTO students(user_id, student_uid, full_name, student_school, student_phone) VALUES(?,?,?,?,?)"
+            db.query(studentSQL,[userID, id, fullName, school, phone], (err,result) => {
+                if(err) {
+                    return res.status(401).render("register",{errState:true, message:"Register Failed(1)"})
+                }
+                return res.status(200).render("student/index", {name:fullName})
+            })
+        } else if (role == 2) {
+            const instructorSQL = "INSERT INTO instructors(user_id, ins_uid, full_name, ins_school, ins_phone) VALUES(?,?,?,?,?)"
+            db.query(instructorSQL,[userID, id, fullName, school, phone], (err,result) => {
+                if(err) {
+                    return res.status(401).render("register",{errState:true, message:"Register Failed(2)"})
+                }
+                return res.status(200).render("staff/index", {name:fullName})
+            })
+        }
+    })
+}
 module.exports = register;
