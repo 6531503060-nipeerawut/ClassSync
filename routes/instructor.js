@@ -15,32 +15,86 @@ router.get("/", checkAuth, (req,res) => {
     const userid = req.session.user.id
     res.render("instructor/index", {id:userid, errState:null, message:null})
 })
-router.get("/course", (req,res) =>{
-    const userid = req.session.user.id
-    db.query("SELECT * FROM courses", (err,result) => {
+router.get('/course',checkAuth, (req, res) => {
+    const userid = req.session.user.id;
+
+    db.query("SELECT * FROM courses WHERE ins_id = ?", [userid], (err, result) => {
         if (err) {
-            return res.status(500).render("instructor/index", {id:userid, errState:null, message:"Can not query from server(500)"})
+            return res.status(500).render('instructor/index', { id: userid, errState: true, message: "Cannot refresh from server (500)", courses: null });
         }
-    })
-})
+        console.log(result)
+        res.status(200).render('instructor/index', { id: userid, errState: false, message: "Refresh Success", courses: result });
+    });
+});
+router.get('/del/:id', (req, res) => {
+    const userid = req.session.user.id;
+    const delID = req.params.id;
 
-router.post("/course", (req,res) => {
-    const { id, courseCode, courseName, courseCredit } = req.body
+    const sqlDel = "DELETE FROM courses WHERE course_id = ? AND ins_id = ?"; // Check both course ID and instructor ID
+    db.query(sqlDel, [delID, userid], (err, result) => {
+        if (err) {
+            return res.status(500).render('instructor/index', { id: userid, errState: true, message: "Cannot delete the course (500)", courses: [] });
+        }
 
-    const userid = req.session.user.id
-    const addCourse = "INSERT INTO courses(course_code, course_name, course_credit, ins_id) VALUES(?,?,?,?)"
-    db.query(addCourse, [courseCode, courseName, courseCredit,userid], (err, result) => {
+        const sqlFetchCourses = "SELECT * FROM courses WHERE ins_id = ?";
+        db.query(sqlFetchCourses, [userid], (fetchErr, courses) => {
+            if (fetchErr) {
+                return res.status(500).render('instructor/index', { id: userid, errState: true, message: "Cannot fetch courses after deletion (500)", courses: [] });
+            }
+
+            return res.status(200).render('instructor/index', { id: userid, errState: false, message: "Delete Success", courses: courses });
+        });
+    });
+});
+
+router.post('/course', (req, res) => {
+    const { courseCode, courseName, courseCredit } = req.body;
+    const userid = req.session.user.id;
+
+    const addCourse = "INSERT INTO courses (course_code, course_name, course_credit, ins_id) VALUES (?, ?, ?, ?)";
+
+    db.query(addCourse, [courseCode, courseName, courseCredit, userid], (err, result) => {
         if (err) {
             console.error("Error adding course:", err);
-            return res.status(500).render('instructor/index', { id:userid,errState:true,message: "Server error" });
+            return res.status(500).render('instructor/index', { id: userid, errState: true, message: "Server Error (500)", courses: null });
         }
 
         if (result.affectedRows > 0) {
-            return res.status(201).render('instructor/index', { id:userid,errState:false, message: "Course added successfully" });
+            db.query("SELECT * FROM courses WHERE ins_id = ?", [userid], (err, result) => {
+                if (err) {
+                    console.error("Error fetching courses:", err);
+                    return res.status(500).render('instructor/index', { id: userid, errState: true, message: "Cannot query from server (500)", courses: null });
+                }
+
+                return res.status(200).render('instructor/index', { id: userid, errState: false, message: "Course added successfully", courses: result });
+            });
         } else {
-            return res.status(500).render('instructor/index', { id:userid,errState:true,message: "Failed to add course" });
+            return res.status(500).render('instructor/index', { id: userid, errState: true, message: "Failed to add course", courses: null });
         }
     });
-})
+});
+
+router.post('/edit/:id', (req, res) => {
+    const userid = req.session.user.id;
+    const courseID = req.params.id;
+    const { course_code, course_name, course_credit } = req.body;
+
+    const sqlUpdate = "UPDATE courses SET course_code = ?, course_name = ?, course_credit = ? WHERE course_id = ? AND ins_id = ?";
+    db.query(sqlUpdate, [course_code, course_name, course_credit, courseID, userid], (err, result) => {
+        if (err) {
+            return res.status(500).render('instructor/index', { id: userid, errState: true, message: "Cannot update the course (500)", courses: [] });
+        }
+
+
+        const sqlFetchCourses = "SELECT * FROM courses WHERE ins_id = ?";
+        db.query(sqlFetchCourses, [userid], (fetchErr, courses) => {
+            if (fetchErr) {
+                return res.status(500).render('instructor/index', { id: userid, errState: true, message: "Cannot fetch courses after update (500)", courses: [] });
+            }
+
+            return res.status(200).render('instructor/index', { id: userid, errState: false, message: "Course updated successfully", courses: courses });
+        });
+    });
+});
 
 module.exports = router;

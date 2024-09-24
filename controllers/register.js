@@ -22,7 +22,7 @@ const register = async (req, res) => {
                 if(err) {
                     return res.status(401).render("register",{errState:true, message:"Register Failed(1)"})
                 }
-                return res.status(200).render("student/index", {name:fullName})
+                return res.status(200).render("login", {name:fullName, errState:false, message:"Register Success"})
             })
         } else if (role == 2) {
             const instructorSQL = "INSERT INTO instructors(user_id, ins_uid, full_name, ins_school, ins_phone) VALUES(?,?,?,?,?)"
@@ -30,7 +30,7 @@ const register = async (req, res) => {
                 if(err) {
                     return res.status(401).render("register",{errState:true, message:"Register Failed(2)"})
                 }
-                return res.status(200).render("instructor/index", {name:fullName})
+                return res.status(200).render("login", {name:fullName, errState:false, message:"Register Success"})
             })
         }
     })
