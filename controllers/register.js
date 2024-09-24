@@ -30,7 +30,7 @@ const register = async (req, res) => {
                 if(err) {
                     return res.status(401).render("register",{errState:true, message:"Register Failed(2)"})
                 }
-                return res.status(200).render("staff/index", {name:fullName})
+                return res.status(200).render("instructor/index", {name:fullName})
             })
         }
     })

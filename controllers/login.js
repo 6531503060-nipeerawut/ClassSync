@@ -21,12 +21,12 @@ const login = (req, res) => {
                 return res.status(401).render("login", {errState:true, message: "Invalid email or password"})
             }
 
-            req.session.user = {email:user.email}
+            req.session.user = {email:user.email, role:user.role, id:user.user_id}
             if(user.role == 1) {
                 
-                res.status(200).render("student/index", {name: user.email})
+                res.status(200).render("student/index", {name:user.email, id:user.user_id, errState:null, message:null})
             }else if(user.role == 2) {
-                res.status(200).render("student/index", {name: user.email})
+                res.status(200).render("instructor/index", {name:user.email, id:user.user_id, errState:null, message:null})
             }
             
         })
