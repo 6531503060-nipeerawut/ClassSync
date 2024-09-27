@@ -18,12 +18,16 @@ router.get("/", checkAuth, (req,res) => {
 router.get('/course',checkAuth, (req, res) => {
     const userid = req.session.user.id;
 
-    db.query("SELECT * FROM courses WHERE ins_id = ?", [userid], (err, result) => {
+    db.query("SELECT * FROM courses WHERE ins_id = ?", [userid], (err, result1) => {
         if (err) {
-            return res.status(500).render('instructor/index', { id: userid, errState: true, message: "Cannot refresh from server (500)", courses: null });
+            return res.status(500).render('instructor/index', { id: userid, errState: true, message: "Cannot refresh from server (500)", courses: null, classes: [] });
         }
-        console.log(result)
-        res.status(200).render('instructor/index', { id: userid, errState: false, message: "Refresh Success", courses: result });
+        db.query("SELECT * FROM classes WHERE class_ins = ?", [userid], (err,result2) => {
+            if (err) {
+                return res.status(500).render('instructor/index', { id: userid, errState: true, message: "Cannot refresh from server (500)", courses: null, classes: [] });
+            }
+            res.status(200).render('instructor/index', { id: userid, errState: false, message: "Refresh Success", courses: result1, classes: result2 });
+        })
     });
 });
 router.get('/del/:id', (req, res) => {
@@ -95,6 +99,55 @@ router.post('/edit/:id', (req, res) => {
             return res.status(200).render('instructor/index', { id: userid, errState: false, message: "Course updated successfully", courses: courses });
         });
     });
+});
+
+// POST route to add a new section
+router.post('/section', (req, res) => {
+    const { course_id, section, classroom, class_ins, password } = req.body;
+
+    const userid = req.session.user.id;
+                    db.query("SELECT * FROM courses WHERE ins_id = ?", [userid], (err, result1) => {
+                        if (err) {
+                            return res.status(500).render('instructor/index', { id: userid, errState: true, message: "Cannot query from server (500)", courses: null, classes: null });
+                        }
+                        db.query("SELECT * FROM classes WHERE class_ins = ?", [userid], (err,result2) => {
+                            if(err) {
+                                return res.status(500).render("login", {errState:true, message:"Cannot query classes"})
+                            }
+
+    // Insert the new section into the database
+    const query = `INSERT INTO classes (class_course, class_section, class_room, class_ins, class_password) VALUES (?, ?, ?, ?, ?)`;
+    db.query(query, [course_id, section, classroom, class_ins, password], (err, result) => {
+        if (err) {
+            return res.status(500).render('instructor/index', { id: userid, errState: true, message: "Cannot fetch courses after update (500)", courses: [], classes: [] });
+        }
+        return res.status(200).render('instructor/index', { id: userid, errState: false, message: "Course updated successfully", courses: result1, classes: result2 });
+    });
+})
+});
+});
+
+router.post('/delete/section', (req,res) => {
+    const { section_id, course_id } = req.body;
+
+    const userid = req.session.user.id;
+                    db.query("SELECT * FROM courses WHERE ins_id = ?", [userid], (err, result1) => {
+                        if (err) {
+                            return res.status(500).render('instructor/index', { id: userid, errState: true, message: "Cannot query from server (500)", courses: null, classes: null });
+                        }
+                        db.query("SELECT * FROM classes WHERE class_ins = ?", [userid], (err,result2) => {
+                            if(err) {
+                                return res.status(500).render("login", {errState:true, message:"Cannot query classes"})
+                            }
+                            const query = `DELETE FROM classes WHERE class_id = ? AND class_course = ?`;
+                        db.query(query, [section_id, course_id], (err, result) => {
+                            if (err) {
+                                return res.status(500).render("login", {errState:true, message:"Cannot query classes"})
+                            }
+                            res.status(200).render('instructor/index', { id: userid, errState: false, message: "Delete section successful", courses: result1, classes: result2 });
+                        });
+                        })
+                    });
 });
 
 module.exports = router;

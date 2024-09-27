@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +7,6 @@
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -34,229 +32,117 @@
         </div>
     </nav>
 
-    <!-- Sidebar and Content -->
-    <div class="container-fluid">
-        <div class="row">
-            <!-- Sidebar -->
-            <!-- <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-                <div class="position-sticky pt-3">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">
-                                <i class="bi bi-house-door"></i>
-                                Dashboard
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="bi bi-book"></i>
-                                My Courses
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="bi bi-person"></i>
-                                Manage Students
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="bi bi-bar-chart"></i>
-                                Reports
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </nav> -->
-
-            <!-- Main content -->
-            <main class="col-md-12 ms-sm-auto col-lg-12 px-md-4">
-                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Dashboard</h1>
-                </div>
-
-                <!-- Dashboard Cards -->
-                <div class="row">
-                    <div class="col-md-4">
-                        <!-- Card Triggering the Modal -->
-                        <a class="card text-decoration-none" style="color:black;" href="#" data-bs-toggle="modal" data-bs-target="#createCourseModal">
-                            <div class="card-body">
-                                <h5 class="card-title">Create Courses</h5>
+    <!-- Tabs -->
+    <div class="container mt-4">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#tab1" type="button" role="tab" aria-controls="tab1" aria-selected="true">Dashboard</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#tab2" type="button" role="tab" aria-controls="tab2" aria-selected="false">Response</button>
+            </li>
+        </ul>
+        <div class="tab-content mt-3" id="myTabContent">
+            <!-- Tab 1: Current Page -->
+            <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="home-tab">
+                <!-- Sidebar and Content -->
+                <div class="container-fluid">
+                    <div class="row">
+                        <!-- Main content -->
+                        <main class="col-md-12 ms-sm-auto col-lg-12 px-md-4">
+                            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                                <h1 class="h2">Dashboard</h1>
                             </div>
-                        </a>
-                    </div>
-                    <div class="col-md-4">
-                        <a class="card  text-decoration-none"style="color:black;" href="#">
-
-                            <div class="card-body">
-                                <h5 class="card-title">Something</h5>
+                            <!-- Dashboard Cards -->
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <!-- Card Triggering the Modal -->
+                                    <a class="card text-decoration-none" style="color:black;" href="#" data-bs-toggle="modal" data-bs-target="#createCourseModal">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Create Courses</h5>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-md-4">
+                                    <a class="card  text-decoration-none" style="color:black;" href="#">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Something</h5>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-md-4">
+                                    <a class="card  text-decoration-none" style="color:black;" href="#">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Meetings</h5>
+                                        </div>
+                                    </a>
+                                </div>
                             </div>
-                    </a>
-                    </div>
-                    <div class="col-md-4">
-                    <a class="card  text-decoration-none"style="color:black;" href="#">
-
-                        <div class="card-body">
-                            <h5 class="card-title">Something</h5>
-                        </div>
-                </a>
-            </div>
-                </div>
-
-                <% if (message) { %>
-                    <% if (errState) { %>
-                        <div class="alert alert-danger alert-dismissible fade show my-3" role="alert">
-                            <%= message %>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    <% } else { %>
-                        <div class="alert alert-success alert-dismissible fade show my-3" role="alert">
-                            <%= message %>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    <% } %>
-                <% } %>
-
-                <!-- Course Table -->
-                <div class="d-flex justify-content-between align-items-center mt-4">
-                    <h2>My Courses</h2>
-                    <a href="/i/course"  class="btn btn-secondary">Refresh</a>
-                </div>
-                    <table class="table table-striped table-sm">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Course Code</th>
-                                <th>Course Name</th>
-                                <th>Students Credit</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% if (courses || courses.length > 0 ) { %>
-                                <% courses.forEach((course, index) => { %>
-                                    <tr>
-                                        <td><%= index + 1 %></td> 
-                                        <td><%= course.course_code %></td>
-                                        <td><%= course.course_name %></td>
-                                        <td><%= course.course_credit %></td>
-                                        <td>
-                                            <button class="btn btn-primary btn-sm">Manage</button>
-                                            <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editModal<%= course.course_id %>">
-                                                Edit
-                                            </button>
-                                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal<%= course.course_id %>">
-                                                Delete
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <!-- DELETE Modal -->
-                                    <div class="modal fade" id="deleteModal<%= course.course_id %>" tabindex="-1" aria-labelledby="deleteModalLabel<%= course.id %>" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="deleteModalLabel<%= course.id %>">Confirm Deletion</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    Are you sure you want to delete the course "<%= course.course_name %>"?
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                                    <!-- The actual delete action -->
-                                                    <a href="/i/del/<%= course.course_id %>" class="btn btn-danger">Confirm Delete</a>
-                                                </div>
-                                            </div>
-                                        </div>
+                            <!-- Display Success or Error Message -->
+                            <% if (message) { %>
+                                <% if (errState) { %>
+                                    <div class="alert alert-danger alert-dismissible fade show my-3" role="alert">
+                                        <%= message %>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                     </div>
-
-                                    <!-- Edit Modal -->
-                                    <div class="modal fade" id="editModal<%= course.course_id %>" tabindex="-1" aria-labelledby="editModalLabel<%= course.course_id %>" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="editModalLabel<%= course.course_id %>">Edit Course</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <!-- Edit form to update the course details -->
-                                                    <form action="/i/edit/<%= course.course_id %>" method="post">
-                                                        <div class="mb-3">
-                                                            <label for="courseCode<%= course.course_id %>" class="form-label">Course Code</label>
-                                                            <input type="text" class="form-control" id="courseCode<%= course.course_id %>" name="course_code" value="<%= course.course_code %>" required>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="courseName<%= course.course_id %>" class="form-label">Course Name</label>
-                                                            <input type="text" class="form-control" id="courseName<%= course.course_id %>" name="course_name" value="<%= course.course_name %>" required>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="courseCredit<%= course.course_id %>" class="form-label">Course Credit</label>
-                                                            <select class="form-control" id="courseCredit<%= course.course_id %>" name="course_credit" required>
-                                                                <option value="1" <%= course.course_credit === 1 ? 'selected' : '' %>>1</option>
-                                                                <option value="2" <%= course.course_credit === 2 ? 'selected' : '' %>>2</option>
-                                                                <option value="3" <%= course.course_credit === 3 ? 'selected' : '' %>>3</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                                            <input type="submit" class="btn btn-primary" value="Save Changes">
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
+                                <% } else { %>
+                                    <div class="alert alert-success alert-dismissible fade show my-3" role="alert">
+                                        <%= message %>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                     </div>
-                                <% }) %>
-                            <% } else { %>
-                                <tr>
-                                    <td colspan="5" class="text-center">Data not found</td>
-                                </tr>
+                                <% } %>
                             <% } %>
-                        </tbody>
-                    </table>
+                            <!-- Course Table -->
+                            <div class="d-flex justify-content-between align-items-center mt-4">
+                                <h2>My Courses</h2>
+                                <a href="/i/course"  class="btn btn-secondary">Refresh</a>
+                            </div>
+                            <table class="table table-striped table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Course Code</th>
+                                        <th>Course Name</th>
+                                        <th>Course Credit</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% if (courses || courses.length > 0 ) { %>
+                                        <% courses.forEach((course, index) => { %>
+                                            <tr>
+                                                <td><%= index + 1 %></td> 
+                                                <td><%= course.course_code %></td>
+                                                <td><%= course.course_name %></td>
+                                                <td><%= course.course_credit %></td>
+                                                <td>
+                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#courseModal<%= course.course_id %>">
+                                                        View Sections for <%= course.course_name %>
+                                                    </button>
+                                                    <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editModal<%= course.course_id %>">
+                                                        Edit
+                                                    </button>
+                                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal<%= course.course_id %>">
+                                                        Delete
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        <% }) %>
+                                    <% } else { %>
+                                        <tr>
+                                            <td colspan="5" class="text-center">No courses found</td>
+                                        </tr>
+                                    <% } %>
+                                </tbody>
+                            </table>
+                        </main>
+                    </div>
                 </div>
-            </main>
-        </div>
-    
+            </div>
 
-    <!-- Modal Parts -->
-    <div class="modal fade" id="createCourseModal" tabindex="-1" aria-labelledby="createCourseModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="createCourseModalLabel">Create New Course</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!-- Modal content, such as a form to create a course -->
-                    <form action="/i/course" method="post">
-                        <div class="mb-3">
-                            <label for="id" class="form-label">ID Reference</label>
-                            <input type="text" class="form-control" name="id" value="<%= id %>" disabled>
-                        </div>
-                        <div class="mb-3">
-                            <label for="courseCode" class="form-label">Course Code</label>
-                            <input name="courseCode" type="text" class="form-control" placeholder="Enter course name" require>
-                        </div>
-                        <div class="mb-3">
-                            <label for="courseName" class="form-label">Course Name</label>
-                            <input name="courseName" type="text" class="form-control" placeholder="Enter course name" require>
-                        </div>
-                        <div class="mb-3">
-                            <label for="courseCredit" class="form-label">Course Credit</label>
-                            <select class="form-control" name="courseCredit" require>
-                                <option value="" disabled selected>Select course credit</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                            </select>
-                        </div>
-                        <div class="mb-3 text-end">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <input type="submit" class="btn btn-primary" value="Add course">
-                        </div>
-                    </form>
-                </div>
+            <!-- Tab 2: Blank Page -->
+            <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="profile-tab">
+                <h2 class="text-center mt-4">This is a blank page.</h2>
             </div>
         </div>
     </div>
@@ -264,5 +150,4 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>
