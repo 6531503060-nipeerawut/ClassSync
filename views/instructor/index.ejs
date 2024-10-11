@@ -127,6 +127,137 @@
                                                     </button>
                                                 </td>
                                             </tr>
+
+                                             <!-- DELETE Modal -->
+                                            <div class="modal fade" id="deleteModal<%= course.course_id %>" tabindex="-1" aria-labelledby="deleteModalLabel<%= course.id %>" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="deleteModalLabel<%= course.id %>">Confirm Deletion</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            Are you sure you want to delete the course "<%= course.course_name %>"?
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                            <!-- The actual delete action -->
+                                                            <a href="/i/del/<%= course.course_id %>" class="btn btn-danger">Confirm Delete</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="modal fade" id="editModal<%= course.course_id %>" tabindex="-1" aria-labelledby="editModalLabel<%= course.course_id %>" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="editModalLabel<%= course.course_id %>">Edit Course</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <!-- Edit form to update the course details -->
+                                                            <form action="/i/edit/<%= course.course_id %>" method="post">
+                                                                <div class="mb-3">
+                                                                    <label for="courseCode" class="form-label">Course Code</label>
+                                                                    <input type="text" class="form-control" id="courseCode<%= course.course_id %>" name="course_code" value="<%= course.course_code %>" required>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="courseName" class="form-label">Course Name</label>
+                                                                    <input type="text" class="form-control" id="courseName<%= course.course_id %>" name="course_name" value="<%= course.course_name %>" required>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="courseCredit" class="form-label">Course Credit</label>
+                                                                    <select class="form-control" id="courseCredit<%= course.course_id %>" name="course_credit" required>
+                                                                        <option value="1" <%= course.course_credit === 1 ? 'selected' : '' %>>1</option>
+                                                                        <option value="2" <%= course.course_credit === 2 ? 'selected' : '' %>>2</option>
+                                                                        <option value="3" <%= course.course_credit === 3 ? 'selected' : '' %>>3</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                                    <input type="submit" class="btn btn-primary" value="Save Changes">
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- modal Part -->
+                                            <div class="modal fade" id="courseModal<%= course.course_id %>" tabindex="-1" aria-labelledby="courseModalLabel<%= course.course_id %>" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="courseModalLabel<%= course.course_id %>">Sections for <%= course.course_name %></h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <ul class="list-group">
+                                                                <% classes.filter(section => section.class_course === course.course_id).forEach(function(section) { %>
+                                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                                        <div>
+                                                                            <strong>Section:</strong> <%= section.class_section %> <br>
+                                                                            <strong>Classroom:</strong> <%= section.class_room %> <br>
+                                                                            <strong>Instructor:</strong> <%= section.class_ins %> <br>
+                                                                            <strong>Password:</strong> <%= section.class_password %>
+                                                                        </div>
+                                                                        <form action="/i/delete/section" method="post" onsubmit="return confirm('Are you sure you want to delete this section?');">
+                                                                            <input type="hidden" name="section_id" value="<%= section.class_id %>">
+                                                                            <input type="hidden" name="course_id" value="<%= section.class_course %>">
+                                                                            <input type="submit" class="btn btn-danger btn-sm" value="Delete">
+                                                                        </form>
+                                                                    </li>
+                                                                    <br>
+                                                                <% }) %>
+                                                            </ul>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSectionModal<%= course.course_id %>">
+                                                                Add Section
+                                                            </button>
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Add Section Modal for Each Course -->
+                                            <div class="modal fade" id="addSectionModal<%= course.course_id %>" tabindex="-1" aria-labelledby="addSectionModalLabel<%= course.course_id %>" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="addSectionModalLabel<%= course.course_id %>">Add Section for <%= course.course_name %></h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <!-- Add Section Form -->
+                                                            <form action="/i/section" method="post">
+                                                                <input type="hidden" name="course_id" value="<%= course.course_id %>">
+                                                                <div class="mb-3">
+                                                                    <label for="section" class="form-label">Section</label>
+                                                                    <input type="text" class="form-control" id="section" name="section" required>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="classroom" class="form-label">Classroom</label>
+                                                                    <input type="text" class="form-control" id="classroom" name="classroom" required>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <!-- <label for="class_ins" class="form-label">Instructor</label> -->
+                                                                    <input type="hidden" class="form-control" id="class_ins" name="class_ins" value="<%= course.ins_id %>">
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="password" class="form-label">Password</label>
+                                                                    <input type="text" class="form-control" id="password" name="password" required>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                    <input type="submit" class="btn btn-primary" value="Save Section">
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         <% }) %>
                                     <% } else { %>
                                         <tr>
@@ -140,13 +271,56 @@
                 </div>
             </div>
 
+           
+
             <!-- Tab 2: Blank Page -->
             <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="profile-tab">
                 <h2 class="text-center mt-4">This is a blank page.</h2>
             </div>
         </div>
     </div>
-
+    <!-- Modal create course -->
+ <div class="modal fade" id="createCourseModal" tabindex="-1" aria-labelledby="createCourseModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="createCourseModalLabel">Create New Course</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Modal content, such as a form to create a course -->
+                            <form action="/i/course" method="post">
+                                <div class="mb-3">
+                                    <!-- <label for="user_id" class="form-label">ID Reference</label> -->
+                                    <input type="hidden" class="form-control" name="id"  value="<%= id %>">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="courseCode" class="form-label">Course Code</label>
+                                    <input type="text" class="form-control" name="courseCode"  placeholder="Enter course code" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="courseName" class="form-label">Course Name</label>
+                                    <input type="text" class="form-control" name="courseName"  placeholder="Enter course name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="courseCredit" class="form-label">Course Credit</label>
+                                    <select class="form-control" name="courseCredit" >
+                                        <option value="" disabled selected>Select course credit</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                    </select>
+                                </div>
+                                <hr>
+                                <div class="mb-3 text-end">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <input type="submit" class="btn btn-primary" value="Add course">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
