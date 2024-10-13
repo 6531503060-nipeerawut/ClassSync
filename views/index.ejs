@@ -3,47 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Student Home Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
-        <a class="navbar-brand" href="#">Home page</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
-            </li>
-                <%if (status == "loggedIn"){%>
-                    <li class="nav-item"><a class="nav-link" href="">My Profile</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/api/logout">Logout</a></li>
-                    <%}else{%>
-                        <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
-                    <%}%>
-            </ul>
-        </div>
+            <a class="navbar-brand" href="#">ClassSync</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
         </div>
     </nav>
-    <div class="container my-5">
-        <div class="card" style="width: 100%;">
-            <div class="card-body">
-            <%if (status == "loggedIn"){%>
-            <h5 class="card-title">Welcome to ClassSync<% user.email%></h5>
-            <%}else{%>
-                <h5 class="card-title">Welcome</h5>
-                <%}%>
-            <p class="text"><a href="/CheckIn">Check-in,out</a></p>
-            <p class="text"><a href="">Attendance</a></p>
-            <p class="text"><a href="">Calender</a></p>
-            <p class="text"><a href="">My Profile</a></p>
-            <p class="text"><a href="">Setting</a></p>
+
+    <div class="container mt-5">
+        <div class="text-center">
+            <h1>Welcome to ClassSync</h1>
+        </div>
+
+        <div class="row mt-5 justify-content-center">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        Student
+                    </div>
+                    <div class="card-body text-center">
+                        <p class="card-text">Please login first to access your account.</p>
+                        <a href="/login" class="btn btn-primary btn-lg">Student Login</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        Instructor
+                    </div>
+                    <div class="card-body text-center">
+                        <p class="card-text">Please login first to access your account.</p>
+                        <a href="/login" class="btn btn-primary btn-lg">Instructor Login</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
