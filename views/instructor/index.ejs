@@ -19,7 +19,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Profile</a>
@@ -111,7 +111,7 @@
                                     <% if (courses || courses.length > 0 ) { %>
                                         <% courses.forEach((course, index) => { %>
                                             <tr>
-                                                <td><%= index + 1 %></td> 
+                                                <td><%= index + 1 %></td>
                                                 <td><%= course.course_code %></td>
                                                 <td><%= course.course_name %></td>
                                                 <td><%= course.course_credit %></td>
@@ -200,7 +200,8 @@
                                                                             <strong>Section:</strong> <%= section.class_section %> <br>
                                                                             <strong>Classroom:</strong> <%= section.class_room %> <br>
                                                                             <strong>Instructor:</strong> <%= section.class_ins %> <br>
-                                                                            <strong>Password:</strong> <%= section.class_password %>
+                                                                            <strong>Password:</strong> <%= section.class_password %> <br>
+                                                                            <strong>Enrolled Students:</strong> <%= section.enrolled_count || 0 %>
                                                                         </div>
                                                                         <form action="/i/delete/section" method="post" onsubmit="return confirm('Are you sure you want to delete this section?');">
                                                                             <input type="hidden" name="section_id" value="<%= section.class_id %>">
@@ -242,7 +243,6 @@
                                                                     <input type="text" class="form-control" id="classroom" name="classroom" required>
                                                                 </div>
                                                                 <div class="mb-3">
-                                                                    <!-- <label for="class_ins" class="form-label">Instructor</label> -->
                                                                     <input type="hidden" class="form-control" id="class_ins" name="class_ins" value="<%= course.ins_id %>">
                                                                 </div>
                                                                 <div class="mb-3">
@@ -288,7 +288,6 @@
                             <!-- Modal content, such as a form to create a course -->
                             <form action="/i/course" method="post">
                                 <div class="mb-3">
-                                    <!-- <label for="user_id" class="form-label">ID Reference</label> -->
                                     <input type="hidden" class="form-control" name="id"  value="<%= id %>">
                                 </div>
                                 <div class="mb-3">
