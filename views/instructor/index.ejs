@@ -22,7 +22,7 @@
                         <a class="nav-link active" aria-current="page" href="#">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Profile</a>
+                        <a class="nav-link" href="/pf/profileI">Profile</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/logout">Logout</a>
@@ -201,7 +201,6 @@
                                                                             <strong>Classroom:</strong> <%= section.class_room %> <br>
                                                                             <strong>Instructor:</strong> <%= section.class_ins %> <br>
                                                                             <strong>Password:</strong> <%= section.class_password %> <br>
-                                                                            <strong>Enrolled Students:</strong> <%= section.enrolled_count || 0 %>
                                                                         </div>
                                                                         <form action="/i/delete/section" method="post" onsubmit="return confirm('Are you sure you want to delete this section?');">
                                                                             <input type="hidden" name="section_id" value="<%= section.class_id %>">
