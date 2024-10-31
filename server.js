@@ -18,6 +18,10 @@ app.use(session({
     saveUninitialized: true,
     cookie: {secure: false}
 }))
+app.use((req, res, next) => {
+    res.locals.session = req.session.user;
+    next();
+})
 db.connect((err) => {
     if (err) throw err;
     console.log("MySQL CONNECTED");

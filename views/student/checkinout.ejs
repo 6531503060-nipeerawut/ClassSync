@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check-In,Out</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Student Portal</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-sm">
+                    <div class="card-header text-center">
+                        <h3>Check-In/Check-Out</h3>
+                    </div>
+                    <div class="card-body">
+                        <% if (typeof errState !== 'undefined') { %>
+                            <div class="alert <%= errState ? 'alert-danger' : 'alert-success' %>" role="alert">
+                                <%= message %>
+                            </div>
+                        <% } %>
+                        
+                        <form action="/s/checkinout" method="post">
+                            
+                            <div class="md-3 mb-3">
+                                <label for="checks" class="form-label">Select Action</label>
+                                <select class="form-select" name="checks" required>
+                                    <option value="" disabled selected>Select status</option>
+                                    <option value="1">Check-In</option>
+                                    <option value="2">Check-Out</option>
+                                </select>
+                            </div>
+                            <!-- Submit Button -->
+                            <div class="d-grid">
+                                <input type="submit" class="btn btn-primary" value="Check">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
