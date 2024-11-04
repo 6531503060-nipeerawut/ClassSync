@@ -13,7 +13,12 @@ const checkAuth = (req, res, next) => {
 
 router.get("/profileS", checkAuth, (req, res) => {
     const userId = req.session.user.id;
-    const query = "SELECT user_id, student_uid, full_name, student_school, student_phone FROM students WHERE user_id = ?";
+    const query = `
+        SELECT students.user_id, students.student_uid, students.full_name, students.student_school, students.student_phone, users.email
+        FROM students
+        JOIN users ON students.user_id = users.user_id
+        WHERE students.user_id = ?
+    `;
 
     db.query(query, [userId], (err, results) => {
         if (err) {
@@ -31,11 +36,17 @@ router.get("/profileS", checkAuth, (req, res) => {
 });
 
 router.get("/profileI", checkAuth, (req, res) => {
-    const userId1 = req.session.user.id;
-    const query1 = "SELECT user_id, ins_uid, full_name, ins_school, ins_phone FROM instructors WHERE user_id = ?";
+    const userId = req.session.user.id;
+    const query = `
+        SELECT instructors.user_id, instructors.ins_uid, instructors.full_name, instructors.ins_school, instructors.ins_phone, users.email
+        FROM instructors
+        JOIN users ON instructors.user_id = users.user_id
+        WHERE instructors.user_id = ?
+    `;
 
-    db.query(query1, [userId1], (err, results) => {
+    db.query(query, [userId], (err, results) => {
         if (err) {
+            console.error("Error fetching instructor profile:", err);
             return res.status(500).render("instructor/profile", { user: null });
         }
 
