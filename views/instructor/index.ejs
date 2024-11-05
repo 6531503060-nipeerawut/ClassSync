@@ -19,7 +19,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link active" aria-current="page" href="/i/course">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/pf/profileI">Profile</a>
@@ -64,14 +64,7 @@
                                     </a>
                                 </div>
 
-                                <div class="col-md-4">
-                                    <a class="card  text-decoration-none" style="color:black;" href="#">
-                                        <div class="card-body">
-                                            <h5 class="card-title">Meetings</h5>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
+                                
                             <!-- Display Success or Error Message -->
                             <% if (message) { %>
                                 <% if (errState) { %>
@@ -265,7 +258,14 @@
             </div>
             <!-- Tab 2: Blank Page -->
             <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="profile-tab">
-                <h2 class="text-center mt-4">This is a blank page.</h2>
+                <div class="col-md-4">
+                    <a class="card  text-decoration-none" style="color:black;" href="#">
+                        <div class="card-body">
+                            <h5 class="card-title">Meetings</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
             </div>
         </div>
     </div>
