@@ -31,6 +31,8 @@ app.use("/api", require("./controllers/auth"));
 app.use("/s", require("./routes/student"));
 app.use("/i", require("./routes/instructor"));
 app.use("/sd",require('./routes/schedule'));
+app.use("/dbd",require('./routes/dashboard'));
+app.use("/pf", require("./routes/profile"));
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
