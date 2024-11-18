@@ -14,7 +14,8 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: url(https://img.freepik.com/free-photo/anime-style-galaxy-background_23-2151133978.jpg?t=st=1731834233~exp=1731837833~hmac=6297c6be2b10df2b8c9f60b13e27325f73da624a55b89d03ac57f97e61885b90&w=900) no-repeat center center/cover;
+            background: url('public/images/Background.jpg') no-repeat center center fixed;
+            background-size: cover;
             color: #fff;
             position: relative;
             overflow: hidden;
@@ -31,6 +32,36 @@
             background: rgba(0, 0, 0, 0.6);
             z-index: 1;
         }
+         /* Starry Sky */
+         .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            opacity: 0.9;
+            animation: blink 2s infinite alternate;
+            box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.7); /* Glowing effect */
+        }
+
+        /* Blinking Effect */
+        @keyframes blink {
+            0% {
+                opacity: 0.3;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+
 
         /* Content Styling */
         .container {
@@ -96,6 +127,7 @@
     </style>
 </head>
 <body>
+    <div class="stars"></div>
     <!-- Content -->
     <div class="container">
         <h1>Welcome to ClassSync</h1>
@@ -127,5 +159,24 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Create stars randomly in the background
+        const starsContainer = document.querySelector('.stars');
+        const numberOfStars = 200;  // Increase the number of stars
+
+        for (let i = 0; i < numberOfStars; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            const size = Math.random() * 3 + 1; // Random size between 1px and 4px
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.top = `${Math.random() * 100}vh`;  // Random vertical position
+            star.style.left = `${Math.random() * 100}vw`;  // Random horizontal position
+            star.style.animationDuration = `${Math.random() * 2 + 1}s`;  // Random animation duration for blinking
+            star.style.animationDelay = `${Math.random() * 2}s`;  // Random delay for animation start
+
+            starsContainer.appendChild(star);
+        }
+    </script>
 </body>
 </html>
