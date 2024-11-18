@@ -1,4 +1,3 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,10 +6,115 @@
     <title>Website with Navbar and Sidebar</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <style>
+        
+        /* Apply font */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: url('../public/images/bgg.jpg') ;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+    
+        h1 {
+            color: white; 
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+        }
+        
+
+        /* Navbar */
+       .navbar {
+            background-color: #ffffff00;
+            border-bottom: 0.5px solid white;
+        }
+        .navbar a {
+            text-decoration: none;
+             color: white;
+            padding: 10px 20px;
+            display: inline-block;
+        }
+
+        /* Hover effect for menu items */
+            .navbar a:hover {
+                text-decoration: underline; 
+                text-decoration-color: white;
+        }
+        .navbar-brand, .nav-link {
+            color: #ffffff !important;
+            font-weight: 500;
+        }
+        /* Card Styling */
+        .card {
+            background-color: #ffffff96;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .card h5, .card p {
+            color: #333;
+        }
+
+        .card h5 {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .bi-plus-circle-fill {
+        color: white;
+        }
+
+        /* Alert */
+        .alert {
+            margin-bottom: 20px;
+        }
+
+        /* Modal */
+        .modal-content {
+            border-radius: 10px;
+        }
+
+        /* Buttons */
+        .btn-warning {
+            background-color: #a0a3eb; /* Current background */
+            color: #fff;
+            border-radius: 25px;
+            letter-spacing: 1px;
+            text-transform: capitalize;
+            transition: 0.3s ease-in-out;
+            cursor: pointer;
+        }
+
+        .btn-warning:hover {
+            background-color: #7d58a5;
+            cursor: pointer;
+        }
+
+        .btn-success {
+            background-color: #e485cf;
+            color: #fff;
+        }
+
+        .btn-success:hover {
+            background-color: #e07bcc;
+        }
+
+        .btn-secondary {
+            background-color: #e485cf;
+            border-radius: 25px;
+            color: #fff;
+        }
+
+        .btn-secondary:hover {
+            background-color: #d06dbc;
+        }
+    </style>
 </head>
 <body>
-     <!-- Navbar -->
-     <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark mb-3">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Student Portal</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -19,274 +123,261 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/s/">Classroom</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/dbd/dashboard">Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/sd/schedule">Schedule</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/pf/profileS">Profile</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/logout">Logout</a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link active" href="/s/">Classroom</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/dbd/dashboard">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/sd/schedule">Schedule</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/pf/profileS">Profile</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
                 </ul>
             </div>
         </div>
     </nav>
+
+    <!-- Main Container -->
     <div class="container">
-        <div class="container mb-5 d-flex justify-content-between align-items-center">
-            <div>
-                <span class="h2">My Courses</span>
-            </div>
-            <div>
-                <i class="bi bi-plus-circle-fill fs-4" data-bs-toggle="modal" data-bs-target="#exampleModal" style="cursor: pointer;"></i>
-            </div>
-        </div>
-        <div class="alert alert-success" id="global_alert_success">
-
-        </div>
-        <div class="alert alert-danger" id="global_alert_error" >
-
-        </div>
-        <div id="card-container" class="row ">
-           
+        <div class="mb-5 d-flex justify-content-between align-items-center">
+            <h1>My Courses</h1>
+            <i class="bi bi-plus-circle-fill fs-4" data-bs-toggle="modal" data-bs-target="#exampleModal" style="cursor: pointer;"></i>
         </div>
 
+        <!-- Alerts -->
+        <div id="global_alert_success" class="alert alert-success" style="display: none;">Success message here.</div>
+        <div id="global_alert_error" class="alert alert-danger" style="display: none;">Error message here.</div>
+
+        <!-- Cards -->
+        <div id="card-container" class="row">
+            <!-- Dynamically loaded cards  -->
+        </div>
     </div>
-    
+
+    <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Request To Join</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div id="error-message" class="alert alert-danger" style="display: none;"></div> 
-                        <div id="success-message" class="alert alert-success" style="display: none;"></div>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Request To Join</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="error-message" class="alert alert-danger" style="display: none;">Error message here.</div>
+                    <div id="success-message" class="alert alert-success" style="display: none;">Success message here.</div>
+                    <form>
                         <div class="mb-3">
                             <label for="courseCode" class="form-label">Course Code</label>
-                            <input type="text" class="form-control" name="courseCode" id="courseCode">
+                            <input type="text" class="form-control" id="courseCode">
                         </div>
                         <div class="mb-3">
                             <label for="courseSection" class="form-label">Course Section</label>
-                            <input type="text" class="form-control" name="courseSection" id="courseSection">
+                            <input type="text" class="form-control" id="courseSection">
                         </div>
                         <div class="mb-3">
                             <label for="coursePassword" class="form-label">Course Password</label>
-                            <input type="password" class="form-control" name="coursePassword" id="coursePassword">
+                            <input type="password" class="form-control" id="coursePassword">
                         </div>
-                        
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-warning" id="check-btn">Request</button>
-                        <button type="button" class="btn btn-success" id="join-btn">
-                            Join
-                        </button>
-                    </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-warning" id="check-btn">Request</button>
+                    <button type="button" class="btn btn-success" id="join-btn">Join</button>
                 </div>
             </div>
+        </div>
     </div>
-        
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <script lang="text/javascript">
-                const errorMessageDiv = document.getElementById('error-message');
-                errorMessageDiv.style.display = 'none'; 
-                errorMessageDiv.textContent = ''; 
+   
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+   <script lang="text/javascript">
+               const errorMessageDiv = document.getElementById('error-message');
+               errorMessageDiv.style.display = 'none'; 
+               errorMessageDiv.textContent = ''; 
 
-                const successMessageDiv = document.getElementById('success-message');
-                successMessageDiv.style.display = 'none'; 
-                successMessageDiv.textContent = ''; 
+               const successMessageDiv = document.getElementById('success-message');
+               successMessageDiv.style.display = 'none'; 
+               successMessageDiv.textContent = ''; 
 
-                const joinbtn = document.getElementById('join-btn');
-                joinbtn.style.display = 'none'
-                let success = document.getElementById('global_alert_success')
-                let error = document.getElementById('global_alert_error')
-                success.style.display = 'none'
-                error.style.display = 'none'
-                document.addEventListener('DOMContentLoaded', function () {
-    fetch('/s/class/data/join')
-        .then(response => response.json())
-        .then(data => {
-            const cardContainer = document.getElementById('card-container');
-            console.log(data.data); 
+               const joinbtn = document.getElementById('join-btn');
+               joinbtn.style.display = 'none'
+               let success = document.getElementById('global_alert_success')
+               let error = document.getElementById('global_alert_error')
+               success.style.display = 'none'
+               error.style.display = 'none'
+               document.addEventListener('DOMContentLoaded', function () {
+   fetch('/s/class/data/join')
+       .then(response => response.json())
+       .then(data => {
+           const cardContainer = document.getElementById('card-container');
+           console.log(data.data); 
 
-            if (data.data && data.data.length > 0) {
-                data.data.forEach(course => {
-                    const cardLink = document.createElement('a');
-                    cardLink.href = `/s/course/${course.enroll_class}/details`; 
-                    cardLink.className = 'text-decoration-none text-dark card col-lg-3 col-sm-4 mb-3 mx-2';
+           if (data.data && data.data.length > 0) {
+               data.data.forEach(course => {
+                   const cardLink = document.createElement('a');
+                   cardLink.href = `/s/course/${course.enroll_class}/details`; 
+                   cardLink.className = 'text-decoration-none text-dark card col-lg-3 col-sm-4 mb-3 mx-2';
 
-                    const card = document.createElement('div');
-                    
-                    card.innerHTML = `
-                        <img src="../../public/images/images.png" class="card-img-top" alt="..." style="width: 100%;">
-                        <div class="card-body">
-                            <div class="d-flex align-items-start">
-                                <h5 class="card-title mb-0 flex-grow-1">${course.course_name}</h5>
-                                <div class="dropdown ms-1">
-                                    <i class="bi bi-three-dots-vertical" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;"></i>
-                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                                        <li>
-                                            <a class="dropdown-item" href="#" onclick="unenroll(${course.enroll_id}); event.stopPropagation();">Unenroll</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <p class="card-text">
-                                <strong>Course Code:</strong> ${course.course_code}<br>
-                                <strong>Credits:</strong> ${course.course_credit}<br>
-                                <strong>Section:</strong> ${course.class_section}<br>
-                                <strong>Room:</strong> ${course.class_room}
-                            </p>
-                        </div>
-                    `;
+                   const card = document.createElement('div');
+                   
+                   card.innerHTML = `
+                       <img src="../../public/images/images.png" class="card-img-top" alt="..." style="width: 100%;">
+                       <div class="card-body">
+                           <div class="d-flex align-items-start">
+                               <h5 class="card-title mb-0 flex-grow-1">${course.course_name}</h5>
+                               <div class="dropdown ms-1">
+                                   <i class="bi bi-three-dots-vertical" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;"></i>
+                                   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                                       <li>
+                                           <a class="dropdown-item" href="#" onclick="unenroll(${course.enroll_id}); event.stopPropagation();">Unenroll</a>
+                                       </li>
+                                   </ul>
+                               </div>
+                           </div>
+                           <p class="card-text">
+                               <strong>Course Code:</strong> ${course.course_code}<br>
+                               <strong>Credits:</strong> ${course.course_credit}<br>
+                               <strong>Section:</strong> ${course.class_section}<br>
+                               <strong>Room:</strong> ${course.class_room}
+                           </p>
+                       </div>
+                   `;
 
-                    cardLink.appendChild(card);
-                    cardContainer.appendChild(cardLink);
-                });
-            } else {
-                const noCoursesMessage = document.createElement('div');
-                noCoursesMessage.className = 'alert alert-light border text-center';
-                noCoursesMessage.textContent = 'No courses available.';
-                cardContainer.appendChild(noCoursesMessage);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            const errorMessage = document.createElement('div');
-            errorMessage.className = 'alert alert-danger';
-            errorMessage.textContent = 'An error occurred while fetching courses.';
-            cardContainer.appendChild(errorMessage);
-        });
+                   cardLink.appendChild(card);
+                   cardContainer.appendChild(cardLink);
+               });
+           } else {
+               const noCoursesMessage = document.createElement('div');
+               noCoursesMessage.className = 'alert alert-light border text-center';
+               noCoursesMessage.textContent = 'No courses available.';
+               cardContainer.appendChild(noCoursesMessage);
+           }
+       })
+       .catch(error => {
+           console.error('Error:', error);
+           const errorMessage = document.createElement('div');
+           errorMessage.className = 'alert alert-danger';
+           errorMessage.textContent = 'An error occurred while fetching courses.';
+           cardContainer.appendChild(errorMessage);
+       });
 })
 
 
-        async function unenroll(enrollId)  {
-            
-            const data = {enroll_id:enrollId}
-            const response = await fetch('/s/unenroll/',{
-                method:'post',
-                headers:{'Content-Type':'application/json'},
-                body:JSON.stringify(data)
-            })
-            if(response.ok){
-                const result = response.json()
-                result.then((result)=>{
-                    success.style.display = 'block'
-                    success.textContent = result.message
-                
-                setTimeout(() => {
-                        success.style.display = 'none';
-                        
-                    }, 3000);
-                    setTimeout(()=>{
-                        window.location.reload()
-                    },3000)
-                })
-            }else{
-                const result = response.json()
-                result.then((result)=>{
-                    error.style.display = 'block'
-                error.textContent = result.message
-                setTimeout(() => {
-                        success.style.display = 'none';
-                        
-                    }, 3000);
-                })
-                setTimeout(()=>{
-                        window.location.reload()
-                },3000)
-                
-            }
-        }
+       async function unenroll(enrollId)  {
+           
+           const data = {enroll_id:enrollId}
+           const response = await fetch('/s/unenroll/',{
+               method:'post',
+               headers:{'Content-Type':'application/json'},
+               body:JSON.stringify(data)
+           })
+           if(response.ok){
+               const result = response.json()
+               result.then((result)=>{
+                   success.style.display = 'block'
+                   success.textContent = result.message
+               
+               setTimeout(() => {
+                       success.style.display = 'none';
+                       
+                   }, 3000);
+                   setTimeout(()=>{
+                       window.location.reload()
+                   },3000)
+               })
+           }else{
+               const result = response.json()
+               result.then((result)=>{
+                   error.style.display = 'block'
+               error.textContent = result.message
+               setTimeout(() => {
+                       success.style.display = 'none';
+                       
+                   }, 3000);
+               })
+               setTimeout(()=>{
+                       window.location.reload()
+               },3000)
+               
+           }
+       }
 
-        document.getElementById('check-btn').addEventListener('click',async ()=>{
-            const  courseCode = document.getElementById('courseCode').value;
-            const  coursePassword = document.getElementById('coursePassword').value;
-            const  courseSection = document.getElementById('courseSection').value;
-            const data = {
-                courseCode: courseCode,
-                courseSection: courseSection,
-                coursePassword: coursePassword
-            }
-            const response = await fetch('/s/check/join',{
-                method:'post',
-                headers:{'Content-Type':'application/json'},
-                body:JSON.stringify(data)
-            })
+       document.getElementById('check-btn').addEventListener('click',async ()=>{
+           const  courseCode = document.getElementById('courseCode').value;
+           const  coursePassword = document.getElementById('coursePassword').value;
+           const  courseSection = document.getElementById('courseSection').value;
+           const data = {
+               courseCode: courseCode,
+               courseSection: courseSection,
+               coursePassword: coursePassword
+           }
+           const response = await fetch('/s/check/join',{
+               method:'post',
+               headers:{'Content-Type':'application/json'},
+               body:JSON.stringify(data)
+           })
 
-            if(response.ok){
-                const result = response.json()
-                result.then((result)=>{
-                    successMessageDiv.style.display = 'block'
-                    successMessageDiv.textContent = result.message
-                    joinbtn.style.display = 'block'
-                    setTimeout(() => {
-                        successMessageDiv.style.display = 'none'; 
-                    }, 5000);
-                })
-            }else{
+           if(response.ok){
+               const result = response.json()
+               result.then((result)=>{
+                   successMessageDiv.style.display = 'block'
+                   successMessageDiv.textContent = result.message
+                   joinbtn.style.display = 'block'
+                   setTimeout(() => {
+                       successMessageDiv.style.display = 'none'; 
+                   }, 5000);
+               })
+           }else{
 
-                const result = response.json()
-                result.then((result)=>{
-                    errorMessageDiv.style.display = 'block'
-                    errorMessageDiv.textContent = result.message
-                    joinbtn.style.display = 'none'
-                    setTimeout(() => {
-                            errorMessageDiv.style.display = 'none'; 
-                    }, 5000);
-                })
-                
-            }
-        })
+               const result = response.json()
+               result.then((result)=>{
+                   errorMessageDiv.style.display = 'block'
+                   errorMessageDiv.textContent = result.message
+                   joinbtn.style.display = 'none'
+                   setTimeout(() => {
+                           errorMessageDiv.style.display = 'none'; 
+                   }, 5000);
+               })
+               
+           }
+       })
 
-        document.getElementById('join-btn').addEventListener('click',async()=>{
-            const  courseCode = document.getElementById('courseCode').value;
-            const  coursePassword = document.getElementById('coursePassword').value;
-            const  courseSection = document.getElementById('courseSection').value;
-            const data = {
-                courseCode: courseCode,
-                courseSection: courseSection,
-                coursePassword: coursePassword
-            }
-            
-            const response = await fetch('/s/join',{
-                method:'post',
-                headers:{'Content-Type':'application/json'},
-                body:JSON.stringify(data)
-            })
-            if(!response.ok){
-                const result = response.json()
-                result.then((result)=>{
-                    errorMessageDiv.style.display = 'block'
-                    errorMessageDiv.textContent = result.message
-                    setTimeout(() => {
-                        errorMessageDiv.style.display = 'none'; 
-                    }, 5000);
-                    joinbtn.style.display = 'none'
-                })
-            }else{
-                const result = response.json()
-                result.then((result)=>{
-                    successMessageDiv.style.display = 'block'
-                    successMessageDiv.textContent = result.message
-                    setTimeout(() => {
-                        successMessageDiv.style.display = 'none'; 
-                        window.location.reload();
-                    }, 5000);
-                    joinbtn.style.display = 'none'
-                    
-                })
-            }
-        })
-    </script>
+       document.getElementById('join-btn').addEventListener('click',async()=>{
+           const  courseCode = document.getElementById('courseCode').value;
+           const  coursePassword = document.getElementById('coursePassword').value;
+           const  courseSection = document.getElementById('courseSection').value;
+           const data = {
+               courseCode: courseCode,
+               courseSection: courseSection,
+               coursePassword: coursePassword
+           }
+           
+           const response = await fetch('/s/join',{
+               method:'post',
+               headers:{'Content-Type':'application/json'},
+               body:JSON.stringify(data)
+           })
+           if(!response.ok){
+               const result = response.json()
+               result.then((result)=>{
+                   errorMessageDiv.style.display = 'block'
+                   errorMessageDiv.textContent = result.message
+                   setTimeout(() => {
+                       errorMessageDiv.style.display = 'none'; 
+                   }, 5000);
+                   joinbtn.style.display = 'none'
+               })
+           }else{
+               const result = response.json()
+               result.then((result)=>{
+                   successMessageDiv.style.display = 'block'
+                   successMessageDiv.textContent = result.message
+                   setTimeout(() => {
+                       successMessageDiv.style.display = 'none'; 
+                       window.location.reload();
+                   }, 5000);
+                   joinbtn.style.display = 'none'
+                   
+               })
+           }
+       })
+   </script>
 </body>
 </html>
+

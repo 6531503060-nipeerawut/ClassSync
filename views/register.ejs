@@ -3,79 +3,268 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Register</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* General Styling */
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('public/images/Background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: hsl(0, 0%, 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Background Overlay */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+        }
+
+        /* Starry Sky */
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            opacity: 0.9;
+            animation: blink 2s infinite alternate;
+            box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.7); /* Glowing effect */
+        }
+
+        /* Blinking Effect */
+        @keyframes blink {
+            0% {
+                opacity: 0.3;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Shooting Star Styling */
+        .shooting-star {
+            position: absolute;
+            top: -10%;
+            width: 6px;
+            height: 6px;
+            background-color: white;
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+            opacity: 0;
+            animation: shooting-star 4s linear infinite;
+        }
+
+        /* Shooting Star Animation */
+        @keyframes shooting-star {
+            0% {
+                left: -10%;
+                top: 10%;
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                left: 100%;
+                top: 90%;
+                transform: scale(0.7);
+                opacity: 0;
+            }
+        }
+
+        /* Form Container Styling */
+        .form-container {
+            position: relative;
+            z-index: 2;
+            background: hsla(0, 0%, 42%, 0.378);
+            border: 2px solid hsl(0, 0%, 100%);
+            border-radius: 1rem;
+            padding: 2rem;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .row {
+            margin-bottom: 1rem;
+        }
+
+        input, select {
+            background: none;
+            color: hsl(0, 0%, 100%);
+            border: 2px solid hsl(0, 0%, 100%);
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: hsl(0, 0%, 90%);
+        }
+
+        button {
+            width: 100%;
+            background: hsl(0, 0%, 100%);
+            color: hsl(0, 0%, 10%);
+            border: none;
+            padding: 0.75rem;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: hsl(0, 0%, 90%);
+            letter-spacing: 1px;
+        }
+
+        .links {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .links a {
+            color: hsl(0, 0%, 100%);
+            text-decoration: none;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card shadow-sm">
-                    <div class="card-header text-center">
-                        <h3>Registration</h3>
-                    </div>
-                    <div class="card-body">
-                        <%if (errState){%>
-                            <div class="alert alert-danger" role="alert">
-                                <%= message %>
-                            </div>
-                        <%}else if(errState == false){%>
-                            <div class="alert alert-success" role="alert">
-                                <%= message %>
-                            </div>
-                        <%} else {%>
-                            
-                        <%}%>
-                        <form action="/register" method="post">
-                            <!-- UID Field -->
-                            <div class="mb-3">
-                                <label for="uid" class="form-label">ID</label>
-                                <input type="text" name="id" class="form-control" placeholder="Enter ID" required>
-                            </div>
-                            <!-- Full Name Field -->
-                            <div class="mb-3">
-                                <label for="fullName" class="form-label">Full Name</label>
-                                <input type="text" name="fullName" class="form-control" placeholder="Enter full name" required>
-                            </div>
-                            <!-- Student School Field -->
-                            <div class="mb-3">
-                                <label for="school" class="form-label">School</label>
-                                <input type="text" name="school" class="form-control" placeholder="Enter school" required>
-                            </div>
-                            <!-- Phone Field -->
-                            <div class="mb-3">
-                                <label for="phone" class="form-label">Phone</label>
-                                <input type="text" name="phone" class="form-control" placeholder="Enter phone number" required>
-                            </div>
-                            <div class="md-3 mb-3">
-                                <label for="role" class="form-label">Role</label>
-                                <select class="form-select" name="role" required>
-                                    <option value="" disabled selected>Select role</option>
-                                    <option value="1">Student</option>
-                                    <option value="2">Instructor</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" name="email" class="form-control" placeholder="Enter Email" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" name="password" class="form-control" placeholder="Enter Password" required>
-                            </div>
-                            <div class="mb-3">
-                                <p>Have an account? <a href="/login">Login</a></p>
-                            </div>
-                            <!-- Submit Button -->
-                            <div class="d-grid">
-                                <input type="submit" class="btn btn-primary" value="Register">
-                            </div>
-                        </form>
-                    </div>
+    <div class="stars"></div>
+    <div id="shooting-stars-container"></div>
+    <div class="form-container">
+        <h1>Registration</h1>
+        <% if (errState) { %>
+            <div class="alert alert-danger" role="alert">
+                <%= message %>
+            </div>
+        <% } else if (errState === false) { %>
+            <div class="alert alert-success" role="alert">
+                <%= message %>
+            </div>
+        <% } %>
+        <form action="/register" method="post">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="uid" class="form-label">ID</label>
+                    <input type="text" id="uid" name="id" class="form-control" placeholder="Enter ID" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="fullName" class="form-label">Full Name</label>
+                    <input type="text" id="fullName" name="fullName" class="form-control" placeholder="Enter full name" required>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="school" class="form-label">School</label>
+                    <input type="text" id="school" name="school" class="form-control" placeholder="Enter school" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="phone" class="form-label">Phone</label>
+                    <input type="text" id="phone" name="phone" class="form-control" placeholder="Enter phone number" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="Enter email" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Enter password" required>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-6 mb-3">
+                    <label for="role" class="form-label">Role</label>
+                    <select id="role" name="role" class="form-select" required>
+                        <option value="" disabled selected>Select role</option>
+                        <option value="1">Student</option>
+                        <option value="2">Instructor</option>
+                    </select>
+                </div>
+            </div>
+                <button type="submit">Register</button>
+                    </form>
+            <div class="links mt-3">
+                <a href="/login">Have an account?</a>
+            </div>
         </div>
+    
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const starsContainer = document.querySelector('.stars');
+        const numberOfStars = 200;
+
+        for (let i = 0; i < numberOfStars; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            const size = Math.random() * 3 + 1 + 'px';
+            star.style.width = size;
+            star.style.height = size;
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDuration = Math.random() * 2 + 1 + 's';
+            starsContainer.appendChild(star);
+        }
+         // Shooting Star Generator
+         const shootingStarsContainer = document.getElementById('shooting-stars-container');
+        const numberOfShootingStars = 10;  // Increase number of shooting stars
+
+        function createShootingStar() {
+            const shootingStar = document.createElement('div');
+            shootingStar.classList.add('shooting-star');
+
+            // Random starting position for each shooting star
+            shootingStar.style.left = `${Math.random() * 100}vw`;  // Random horizontal position
+            shootingStar.style.top = `${Math.random() * 50}vh`;  // Random vertical position (from the top to halfway)
+
+            // Random animation duration between 2s and 5s
+            shootingStar.style.animationDuration = `${Math.random() * 3 + 2}s`;  
+
+            shootingStarsContainer.appendChild(shootingStar);
+
+            // Remove the star after the animation ends
+            setTimeout(() => {
+                shootingStarsContainer.removeChild(shootingStar);
+            }, (Math.random() * 3 + 2) * 1000);  // Duration of animation in ms
+        }
+
+        // Create shooting stars at intervals
+        setInterval(createShootingStar, 1000);  // Create a new star every 1 second
+    </script>
 </body>
 </html>
