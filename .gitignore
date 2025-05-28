@@ -1,0 +1,8 @@
+# ไม่ให้ Git track ไฟล์ .env
+.env
+
+# ไม่ให้ Git track โฟลเดอร์ node_modules
+node_modules/
+
+# ไม่ให้ Git track package-lock.json
+package-lock.json
