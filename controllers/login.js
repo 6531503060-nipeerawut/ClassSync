@@ -1,63 +1,107 @@
-const jwt = require("jsonwebtoken");
 const db = require("../routes/db-config");
 const bcrypt = require("bcryptjs");
 
-const login = (req, res) => {
+const login = async (req, res) => {
     const { email, password } = req.body;
-    const sql = "SELECT * FROM users WHERE email = ?"
+    
+    if (!email || !password) {
+        return res.status(400).render('login', {
+            errState: true,
+            message: "กรุณากรอก Email และ Password"
+        });
+    }
+
+    const sql = "SELECT * FROM users WHERE email = ?";
+    
     try {
-        db.query(sql, [email], async (err, result) => {
+        const [result] = await db.query(sql, [email]);
+        
+        if (result.length === 0) {
+            return res.status(401).render('login', {
+                errState: true,
+                message: "This account does not exist yet."
+            });
+        }
+
+        const user = result[0];
+        console.log("User found:", user.email);
+        
+        const match = await bcrypt.compare(password, user.password);
+
+        if (!match) {
+            return res.status(401).render('login', {
+                errState: true,
+                message: "Invalid email or password"
+            });
+        }
+
+        req.session.regenerate(async (err) => {
             if (err) {
-                console.error(err);
-                return res.status(500).render('login', { errState: true, message: "Server Error" });
+                console.error("Session regeneration error:", err);
+                return res.status(500).render('login', {
+                    errState: true,
+                    message: "Session Error"
+                });
             }
 
-            if (result.length === 0) {
-                return res.status(401).render('login', { errState: true, message: "This account does not exist yet." });
-            }
+            req.session.user = {
+                email: user.email,
+                role: user.role,
+                id: user.user_id
+            };
 
-            const user = result[0];
-            console.log(user)
-            const match = await bcrypt.compare(password, user.password);
-
-            if (!match) {
-                return res.status(401).render('login', { errState: true, message: "Invalid email or password" });
-            }
-
-            req.session.regenerate((err) => {
-                if (err) {
-                    console.error(err);
-                    return res.status(500).render('login', { errState: true, message: "Session Error" });
-                }
-
-                req.session.user = { email: user.email, role: user.role, id:user.user_id };
-
+            try {
                 if (user.role == 1) {
+                    console.log("Redirecting to student dashboard");
+                    return res.status(200).render('student/index', {
+                        name: user.email,
+                        id: user.user_id,
+                        errState: null,
+                        message: null,
+                        courses: null
+                    });
                     
-                    return res.status(200).render('student/index', { name: user.email, id:user.user_id ,errState:null,message:null,courses:null});
                 } else if (user.role == 2) {
-                    const userid = req.session.user.id;
-                    db.query("SELECT * FROM courses WHERE ins_id = ?", [userid], (err, result1) => {
-                        if (err) {
-                            console.error("Error fetching courses:", err);
-                            return res.status(500).render('instructor/index', { id: userid, errState: true, message: "Cannot query from server (500)", courses: null });
-                        }
-                        db.query("SELECT * FROM classes WHERE class_ins = ?", [user.user_id], (err,result2) => {
-                            if(err) {
-                                return res.status(500).render("login", {errState:true, message:"Cannot query classes"})
-                            }
-                            console.log(result2)
-                            res.status(200).render('instructor/index', { id: userid, errState: null, message: null, courses: result1, classes: result2 });
-                        })
+                    console.log("Processing instructor login");
+                    const userid = user.user_id;
+                    
+                    const [coursesResult] = await db.query("SELECT * FROM courses WHERE ins_id = ?", [userid]);
+                    const [classesResult] = await db.query("SELECT * FROM classes WHERE class_ins = ?", [userid]);
+                    
+                    console.log("Courses:", coursesResult.length);
+                    console.log("Classes:", classesResult.length);
+                    
+                    return res.status(200).render('instructor/index', {
+                        id: userid,
+                        errState: null,
+                        message: null,
+                        courses: coursesResult,
+                        classes: classesResult
+                    });
+                    
+                } else {
+                    return res.status(400).render('login', {
+                        errState: true,
+                        message: "Invalid user role"
                     });
                 }
-            });
+                
+            } catch (renderError) {
+                console.error("Render error:", renderError);
+                return res.status(500).render('login', {
+                    errState: true,
+                    message: "Error loading dashboard"
+                });
+            }
         });
+
     } catch (error) {
-        console.error(error);
-        return res.status(500).render('login', { errState: true, message: "Server Error" });
+        console.error("Database error:", error);
+        return res.status(500).render('login', {
+            errState: true,
+            message: "Server Error - Please try again"
+        });
     }
 };
-
 
 module.exports = login;

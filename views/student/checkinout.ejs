@@ -1,43 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Check-In/Out</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
     <style>
-        /* Apply font */
         body {
             font-family: 'Poppins', sans-serif;
-            background: url('../public/images/bgg.jpg') ;
+            background: url('../public/images/bgg.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
         }
 
-        /* Navbar */
-       .navbar {
+        .navbar {
             background-color: #ffffff00;
             border-bottom: 0.5px solid white;
         }
+
         .navbar a {
             text-decoration: none;
-             color: white;
+            color: white;
             padding: 10px 20px;
             display: inline-block;
         }
 
-        /* Hover effect for menu items */
-            .navbar a:hover {
-                text-decoration: underline; 
-                text-decoration-color: white;
+        .navbar a:hover {
+            text-decoration: underline;
+            text-decoration-color: white;
         }
-        .navbar-brand, .nav-link {
+
+        .navbar-brand,
+        .nav-link {
             color: #ffffff !important;
             font-weight: 500;
         }
-        /* Card Styling */
+
         .card {
             border: none;
             border-radius: 10px;
@@ -45,7 +47,8 @@
             padding: 20px;
         }
 
-        .card h5, .card p {
+        .card h5,
+        .card p {
             color: #333;
         }
 
@@ -54,20 +57,19 @@
             font-weight: 600;
         }
 
-
-        /* Check */
         .btn-primary {
             background-color: #afd1f7;
             border: none;
             font-weight: 600;
         }
+
         .btn-primary:hover {
             background-color: #afd1f7;
         }
     </style>
 </head>
+
 <body>
-    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light mb-3">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Student Portal</a>
@@ -97,7 +99,6 @@
         </div>
     </nav>
 
-    <!-- Check-In/Out Section -->
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6">
@@ -106,33 +107,32 @@
                         <h3>Check-In/Check-Out</h3>
                     </div>
                     <div class="card-body">
-                        <% if (typeof errState !== 'undefined') { %>
+                        <% if (typeof errState !=='undefined' ) { %>
                             <div class="alert <%= errState ? 'alert-danger' : 'alert-success' %>" role="alert">
                                 <%= message %>
                             </div>
-                        <% } %>
-                        
-                        <form action="/s/checkinout" method="post">
-                            <div class="mb-3">
-                                <label for="checks" class="form-label">Select Action</label>
-                                <select class="form-select" name="checks" required>
-                                    <option value="" disabled selected>Select status</option>
-                                    <option value="1">Check-In</option>
-                                    <option value="2">Check-Out</option>
-                                </select>
-                            </div>
-                            <!-- ปุ่ม Submit -->
-                            <div class="d-grid">
-                                <input type="submit" class="btn btn-primary" value="Check">
-                            </div>
-                        </form>
+                            <% } %>
+
+                                <form action="/s/checkinout" method="post">
+                                    <div class="mb-3">
+                                        <label for="checks" class="form-label">Select Action</label>
+                                        <select class="form-select" name="checks" required>
+                                            <option value="" disabled selected>Select status</option>
+                                            <option value="1">Check-In</option>
+                                            <option value="2">Check-Out</option>
+                                        </select>
+                                    </div>
+                                    <div class="d-grid">
+                                        <input type="submit" class="btn btn-primary" value="Check">
+                                    </div>
+                                </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
-    <!-- Bootstrap JS -->
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
