@@ -3,7 +3,7 @@
 <div align="center">
   <img src="https://github.com/user-attachments/assets/1e5cae31-48cd-40b8-a266-7b51f4a4ceeb" alt="Architecture ClassSync-Photoroom" width="700">
 </div>
-<p>The “ClassSync” is a web-based platform designed to streamline attendance tracking and notifications. Students can easily check in for their classes online, mark their attendance, and receive confirmation notifications. The system uses HTML/CSS/JavaScript for the frontend, Node.js/Express for backend APIs, and the database used for efficient attendance data management is MySQL, which ensures a responsive and mobile-friendly user experience.</p>
+<p>The “ClassSync” is a web-based platform is designed to help students efficiently manage their class attendance. It allows students to conveniently check in and check out of their classes online, ensuring accurate tracking of attendance records. In addition, the system provides students with access to their personal attendance schedule, allowing them to monitor their class participation history and stay informed about their learning progress. Built with EJS, Express.js, and MySQL, the platform offers a reliable and user-friendly experience for both students and administrators.</p>
 
 <h2>Architecture Design</h2>
 <img width="858" alt="Screenshot 2567-11-17 at 14 59 23" src="https://github.com/user-attachments/assets/b63a1542-6be3-4350-80f1-a7d72e0b581a">
