@@ -1,14 +1,14 @@
-require('dotenv').config({
-  path: process.env.NODE_ENV === 'production' ? '.env.production' : '.env.development'
-});
+require('dotenv').config({ path: '.env.production' });
+const mysql = require("mysql2/promise");
 
-const sql = require("mysql");
-
-const db = sql.createConnection({
+const pool = mysql.createPool({
     host: process.env.DATABASE_HOST,
     user: process.env.DATABASE_USER,
     password: process.env.DATABASE_PASSWORD,
-    database: process.env.DATABASE
-})
+    database: process.env.DATABASE,
+    waitForConnections: true,
+    connectionLimit: 10,
+    connectTimeout: 20000
+});
 
-module.exports = db;
+module.exports = pool;
