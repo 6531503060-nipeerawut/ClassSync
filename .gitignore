@@ -1,5 +1,5 @@
 # ไม่ให้ Git track ไฟล์ .env
-.env
+.env*
 
 # ไม่ให้ Git track โฟลเดอร์ node_modules
 node_modules/

@@ -1,5 +1,8 @@
+require('dotenv').config({
+  path: process.env.NODE_ENV === 'production' ? '.env.production' : '.env.development'
+});
+
 const sql = require("mysql");
-const dotenv = require("dotenv").config();
 
 const db = sql.createConnection({
     host: process.env.DATABASE_HOST,
